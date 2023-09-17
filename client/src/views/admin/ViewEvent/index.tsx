@@ -3,7 +3,7 @@ import { useAppSelector } from "app/store";
 import axios from "axios";
 import { BACKEND_URL } from "constants/definitions";
 import React, { useEffect, useState } from "react";
-import { FaHandPaper } from "react-icons/fa";
+import { FaHandPaper, FaCheckCircle } from "react-icons/fa";
 interface EventState {
   id: string;
   type: string;
@@ -12,6 +12,7 @@ interface EventState {
   city: string;
   description: string;
   club: string;
+  volunteers: Array<string>;
 }
 
 const CalendarPage: React.FC = () => {
@@ -86,7 +87,11 @@ const CalendarPage: React.FC = () => {
                     <span className="ml-2 font-light">({event.club})</span>
                   </h4>
                   <div className="text-right ">
-                    {localStorage.getItem("type") === "admin" ? null : (
+                    {localStorage.getItem("type") === "admin" ? null :
+                    event.volunteers.includes(localStorage.getItem("id"))?
+                     (<button className="mx-1 rounded-md bg-navy-500 p-2 px-3 text-white disabled">
+                     <FaCheckCircle className="mb-1 inline" />
+                   </button>):(
                       <button className="mx-1 rounded-md bg-navy-500 p-2  text-white ">
                         Volunteer <FaHandPaper className="mb-1 inline" />
                       </button>
